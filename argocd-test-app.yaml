@@ -1,19 +1,19 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: Pod
 metadata:
-  name: nginx-deploy-1
+  name: nginx-bite
   labels:
     app: nginx
 spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: nginx
-  template:
-    metadata:
-      labels:
-        app: nginx
-    spec:
-      containers:
-      - name: nginx-container
-        image: nginx:latest
+  containers:
+    - name: nginx
+      image: nginx:latest  
+      ports:
+        - containerPort: 80
+      securityContext:
+        privileged: true     # absolument pas nécessaire
+      resources: {}
+      env:
+        - name: NGINX_ENV
+          value: "une chose géaaannnnteee"
+  restartPolicy: Always
